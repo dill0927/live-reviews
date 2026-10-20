@@ -30,3 +30,5 @@ sekirepo.com を使い続ける前提で、フロント・API・画像配信を�
   - Supabase Auth の独自ドメイン（`auth.sekirepo.com` など）は有料アドオンなので使わない。そのため、Google や X のログイン画面には Supabase のドメインが表示される。
 
 補足（匿名投稿の不正対策の決定から）：api.sekirepo.com は CloudFront（定額制 Free プラン）を指すことになったので、API の ACM 証明書も us-east-1 で発行する。
+
+補足（環境と Terraform state の戦略の改訂から）：dev 環境を作ることになったので、dev 用に `api-dev.sekirepo.com` と `img-dev.sekirepo.com` を追加する。フロントの dev は Vercel の Preview（develop ブランチ）。

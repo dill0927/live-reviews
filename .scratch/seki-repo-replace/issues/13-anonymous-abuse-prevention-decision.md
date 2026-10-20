@@ -37,3 +37,5 @@ ADR：[匿名投稿は Supabase の匿名サインインで扱い、API の前�
   - 秘密のヘッダーを確認するミドルウェアを作る。
   - 投稿数の制限の具体的な数値を決める。
   - `is_anonymous` で権限を分ける（画像の可否）。
+
+補足（環境と Terraform state の戦略の改訂から）：dev 環境を作ることになった。CloudFront の定額制 Free プランは prod の画像用と API 用に使い、dev は従量課金にする（dev には WAF がない）。
