@@ -41,14 +41,15 @@ git clone https://github.com/mirianoda/live-reviews.git
 cd live-reviews
 ```
 
-2. 依存関係のインストール:
+2. 依存関係のインストール（フロントエンドは `frontend/` にあります）:
 
 ```bash
+cd frontend
 npm install
 ```
 
 3. 環境変数の設定:
-   `.env.local`ファイルを作成し、必要な環境変数を設定:
+   `frontend/.env.local`ファイルを作成し、必要な環境変数を設定:
 
 ```
 NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
