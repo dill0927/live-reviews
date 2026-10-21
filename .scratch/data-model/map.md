@@ -28,6 +28,8 @@ Status: open（2026-10-21 作成）
 <!-- 解決したチケットごとに1行：[チケット名](issues/NN-xxx.md) — 結論の要約 -->
 
 - [Supabase の無料プランで使える機能の調査](issues/04-supabase-free-plan-research.md) — Data API は `config.toml` で丸ごと無効にでき、コードで管理できる。2026-10-30 から新しいテーブルに anon などへの grant が付かない。匿名ユーザーは SQL で消してよい（公式に例あり）。マイグレーションで作ったテーブルは RLS が既定で無効。公式は専用の DB ロールを勧めている。pg_cron が無料プランで使えるかは未確認で、dev で確かめる
+- [ディレクトリの再配置（モノレポ化）](issues/01-monorepo-layout.md) — Next.js を `frontend/` に移し、`supabase init` と Makefile（`db-reset` だけ）を用意した。Supabase CLI は 2.121.0。Vercel の Root Directory は `main` へのマージ時に `frontend` に変える
+- [既存の Supabase プロジェクトの確認とマスタの退避](issues/02-existing-supabase-check.md) — 現行は re-sekirepo（東京・Postgres 17）で作り直し不要、署名鍵は HS256 のままなので移行が要る。会場 28 件・アーティスト 45 件を `backup/` に退避した。anon で全テーブルを書き換えられたので、本番に応急処置の RLS を入れた
 
 ## Not yet specified
 
