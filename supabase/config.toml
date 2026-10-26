@@ -5,7 +5,9 @@
 project_id = "live-reviews"
 
 [api]
-enabled = true
+# Data API は使わない（ADR 0002）。dev の作成時の設定とそろえる。
+# このファイルはローカル用の値なので、dev にも prod にも config push しないこと（supabase/README.md）
+enabled = false
 # Port to use for the API URL.
 port = 54321
 # Schemas to expose in your API. Tables, views and stored procedures in this schema will get API

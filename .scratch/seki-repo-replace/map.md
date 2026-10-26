@@ -2,7 +2,7 @@
 
 Label: wayfinder:map
 Status: 完了（2026-10-20）。チケット 14 件はすべて解決済み。次は下の「領域別マップへの引き継ぎ」に沿って、領域別マップを立ち上げる。
-領域別マップ：[データモデル](../data-model/map.md)（2026-10-21 作成）
+領域別マップ：[データモデル](../data-model/map.md)（2026-10-21 作成、2026-10-26 完了）
 
 ## Destination
 
@@ -23,7 +23,7 @@ SEKI-REPO リプレイスについて、領域をまたぐアーキテクチャ�
   - 座席レポ＝1回の参戦体験の記録。会場評価も含む。
   - 参戦日は任意の日付として持つ。公演はエンティティにしない。
   - 匿名投稿はテキストのみで、画像はログイン必須。（チャーティング時は「編集・削除不可」としていたが、「匿名投稿の不正対策の決定」で、匿名サインインを使って同じブラウザからなら編集・削除できるように変更した）
-  - 既存データのうち、会場とアーティストのマスタだけを seed として引き継ぐ。
+  - 既存データのうち、会場とアイドル（旧：アーティスト）のマスタだけを seed として引き継ぐ。
   - sekirepo.com は使い続ける。
 
 ## Decisions so far
@@ -78,6 +78,7 @@ SEKI-REPO リプレイスについて、領域をまたぐアーキテクチャ�
    - oapi-codegen の OpenAPI 対応バージョン、検証ミドルウェアと JWT ライブラリの選定 → [API 契約の管理方式](issues/04-api-contract.md)、[JWT の検証場所](issues/14-jwt-verification-location.md)
    - Lambda のアダプタの選定、WebP エンコーダーの arm64 での実測、写真の向きの補正、HEIC の扱い → [Lambda の粒度](issues/10-lambda-granularity.md)、[画像パイプラインの決定](issues/08-image-pipeline-decision.md)
    - CloudFront 経由のクライアント IP の取り出し方、秘密ヘッダーの確認、投稿数の制限値 → [匿名投稿の不正対策の決定](issues/13-anonymous-abuse-prevention-decision.md)
+   - 匿名サインインを有効にする（ローカルの `config.toml` の `enable_anonymous_sign_ins`、dev への `supabase config push`）と、Turnstile の設定。縦切り「匿名での投稿」の前に行う。データモデルのマップでは、オフのまま DB の設計を終えた。`config push` は `config.toml` の全項目を送り、今の値はローカル用なので、そのまま push すると dev の Auth（メール確認・MFA・`site_url` など）が上書きされる。push の前に、ローカルと dev の設定の分け方を決める → [dev への反映と確認](../data-model/issues/12-apply-to-dev.md)、[匿名投稿の不正対策の決定](issues/13-anonymous-abuse-prevention-decision.md)、[ユーザーのプロフィールと認証との紐付け](../data-model/issues/08-user-profile.md)
    - Go・Supabase CLI・air・Terraform（1.10 以上）のインストール、ローカルでの Google と X のログイン → [ローカル開発環境](issues/12-local-dev-environment.md)、[環境と Terraform state の戦略](issues/09-environments-terraform-state.md)
    - 予算アラートの作成、CloudFront 定額制 Free プランへの加入、ACM（us-east-1）、`execute-api` の無効化、DNS の Cloudflare への移行と CAA、Supabase への定期アクセスの規約確認 → [AWS アカウントと無料枠の条件の確認](issues/01-aws-account-free-tier.md)、[匿名投稿の不正対策の決定](issues/13-anonymous-abuse-prevention-decision.md)、[ドメインと DNS の構成](issues/05-domain-dns.md)、[データストアと認証基盤の選定](issues/06-datastore-auth-selection.md)
 3. **フロントエンド**
@@ -85,6 +86,7 @@ SEKI-REPO リプレイスについて、領域をまたぐアーキテクチャ�
 4. **UI/UX**
    - 画像変換中の「処理中」の見せ方 → [画像パイプラインの決定](issues/08-image-pipeline-decision.md)
    - 一時停止中（HTTP 540）のエラー表示 → [データストアと認証基盤の選定](issues/06-datastore-auth-selection.md)
+   - 会場の平均評価にファンサを含めるか、公演名の書き方をそろえる誘導（例の提示、既存の公演名を候補に出す） → [座席レポのテーブル](../data-model/issues/09-seat-report-table.md)
 5. **CI/CD・ドキュメント**
    - GitHub Actions の OIDC ロール（bootstrap で作る）、dev と prod への plan/apply の流れ（develop → dev、main → prod）、`supabase db push` の実行タイミング、Supabase への定期アクセスの cron → [環境と Terraform state の戦略](issues/09-environments-terraform-state.md)、[ローカル開発環境](issues/12-local-dev-environment.md)、[データストアと認証基盤の選定](issues/06-datastore-auth-selection.md)
 
